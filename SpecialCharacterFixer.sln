@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecialCharacterFixer", "SpecialCharacterFixer\SpecialCharacterFixer.csproj", "{D9075A09-D7D3-4D2A-99EB-A260DAC53CBE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9075A09-D7D3-4D2A-99EB-A260DAC53CBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9075A09-D7D3-4D2A-99EB-A260DAC53CBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9075A09-D7D3-4D2A-99EB-A260DAC53CBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9075A09-D7D3-4D2A-99EB-A260DAC53CBE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E89C86F7-4934-4D9A-AE74-F4DD75A902C7}
+	EndGlobalSection
+EndGlobal
