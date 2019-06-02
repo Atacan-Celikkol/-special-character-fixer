@@ -1,6 +1,3 @@
-# special-character-fixer
-
-
 # Special Character Fixer
 Fixes the language specific special characters in text files. Especially for the <b>*.srt*</b> or <b>*.txt*</b> files.
 <br>
