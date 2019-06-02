@@ -20,7 +20,7 @@ namespace SpecialCharacterFixer
         {
             progressBar.Value = 0;
             dropList.Items.Clear();
-
+            dropFilesLabel.Visible = false;
             string[] filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
             foreach (var item in filePaths)
             {
