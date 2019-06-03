@@ -1,6 +1,7 @@
 ﻿using MetroFramework.Forms;
 using System;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace SpecialCharacterFixer
@@ -22,6 +23,7 @@ namespace SpecialCharacterFixer
             dropList.Items.Clear();
             dropFilesLabel.Visible = false;
             string[] filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+            progressBar.Maximum = filePaths.Length * 3;
             foreach (var item in filePaths)
             {
                 var listItem = new ListViewItem(Path.GetFileName(item));
@@ -31,12 +33,13 @@ namespace SpecialCharacterFixer
 
             for (int i = 0; i < filePaths.Length; i++)
             {
-                var fileText = SpecialCharacterFixer(File.ReadAllText(filePaths[i]));
+                progressBar.Value++;
+                var fileText = SpecialCharacterFixer(File.ReadAllText(filePaths[i], Encoding.Default));
+                progressBar.Value++;
                 File.WriteAllText(filePaths[i], fileText);
                 dropList.Items[i].Checked = true;
-                progressBar.Value += 100 / filePaths.Length;
+                progressBar.Value++;
             }
-            progressBar.Value = 100;
             return;
         }
 
