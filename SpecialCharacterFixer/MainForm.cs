@@ -1,6 +1,7 @@
 ﻿using MetroFramework.Forms;
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -17,13 +18,15 @@ namespace SpecialCharacterFixer
         {
         }
 
-        private void DropList_DragDrop(object sender, DragEventArgs e)
+        private void DragDropHandler(object sender, DragEventArgs e)
         {
             progressBar.Value = 0;
             dropList.Items.Clear();
             dropFilesLabel.Visible = false;
+
             string[] filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
             progressBar.Maximum = filePaths.Length * 3;
+
             foreach (var item in filePaths)
             {
                 var listItem = new ListViewItem(Path.GetFileName(item));
@@ -34,16 +37,23 @@ namespace SpecialCharacterFixer
             for (int i = 0; i < filePaths.Length; i++)
             {
                 progressBar.Value++;
-                var fileText = SpecialCharacterFixer(File.ReadAllText(filePaths[i], Encoding.Default));
+                var fileText = File.ReadAllText(filePaths[i], Encoding.Default);
+                if (!fileText.Any(x => x == 'ð' || x == 'Ð' || x == 'ý' || x == 'Ý' || x == 'þ' || x == 'Þ'))
+                {
+                    progressBar.Value += 2;
+                    continue;
+                }
+
+                var fixedText = SpecialCharacterFixer(fileText);
                 progressBar.Value++;
-                File.WriteAllText(filePaths[i], fileText);
+                File.WriteAllText(filePaths[i], fixedText, Encoding.UTF8);
                 dropList.Items[i].Checked = true;
                 progressBar.Value++;
             }
             return;
         }
 
-        private void DropList_DragEnter(object sender, DragEventArgs e)
+        private void DragEnterHandler(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
             return;
@@ -51,40 +61,10 @@ namespace SpecialCharacterFixer
 
         private string SpecialCharacterFixer(string text)
         {
-            var fixedText = "";
-            var chars = text.ToCharArray();
-            foreach (var chr in chars)
-            {
-                switch (chr)
-                {
-                    case 'ð':
-                        fixedText += 'ğ';
-                        break;
-                    case 'Ð':
-                        fixedText += 'Ğ';
-                        break;
-
-                    case 'ý':
-                        fixedText += 'ı';
-                        break;
-                    case 'Ý':
-                        fixedText += 'İ';
-                        break;
-
-                    case 'þ':
-                        fixedText += 'ş';
-                        break;
-                    case 'Þ':
-                        fixedText += 'Ş';
-                        break;
-
-                    default:
-                        fixedText += chr;
-                        break;
-                }
-            }
-
-            return fixedText;
+            return text
+                .Replace('ð', 'ğ').Replace('Ð', 'Ğ')
+                .Replace('ý', 'ı').Replace('Ý', 'İ')
+                .Replace('þ', 'ş').Replace('Þ', 'Ş');
         }
     }
 }

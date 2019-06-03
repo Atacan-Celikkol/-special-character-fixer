@@ -81,8 +81,8 @@
             this.dropList.UseSelectable = true;
             this.dropList.UseStyleColors = true;
             this.dropList.View = System.Windows.Forms.View.Details;
-            this.dropList.DragDrop += new System.Windows.Forms.DragEventHandler(this.DropList_DragDrop);
-            this.dropList.DragEnter += new System.Windows.Forms.DragEventHandler(this.DropList_DragEnter);
+            this.dropList.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropHandler);
+            this.dropList.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterHandler);
             // 
             // dropFilesLabel
             // 
@@ -96,8 +96,8 @@
             this.dropFilesLabel.TabIndex = 2;
             this.dropFilesLabel.Text = "Drop files here";
             this.dropFilesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.dropFilesLabel.DragDrop += new System.Windows.Forms.DragEventHandler(this.DropList_DragDrop);
-            this.dropFilesLabel.DragEnter += new System.Windows.Forms.DragEventHandler(this.DropList_DragEnter);
+            this.dropFilesLabel.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropHandler);
+            this.dropFilesLabel.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterHandler);
             // 
             // MainForm
             // 
