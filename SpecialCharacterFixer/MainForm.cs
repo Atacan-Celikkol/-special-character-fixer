@@ -24,33 +24,39 @@ namespace SpecialCharacterFixer
             dropList.Items.Clear();
             dropFilesLabel.Visible = false;
 
-            string[] filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
-            progressBar.Maximum = filePaths.Length * 3;
+            var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+            var fixedItemCount = 0;
 
-            foreach (var item in filePaths)
-            {
-                var listItem = new ListViewItem(Path.GetFileName(item));
-                listItem.ToolTipText = item;
-                dropList.Items.Add(listItem);
-            }
+            progressBar.Maximum = filePaths.Length * 4;
 
-            for (int i = 0; i < filePaths.Length; i++)
+            foreach (var filePath in filePaths)
             {
+                var listItem = new ListViewItem(Path.GetFileName(filePath));
+                listItem.ToolTipText = filePath;
+                listItem = dropList.Items.Add(listItem);
                 progressBar.Value++;
-                var fileText = File.ReadAllText(filePaths[i], Encoding.Default);
+
+                var fileText = File.ReadAllText(filePath, Encoding.Default);
+                progressBar.Value++;
+
                 if (!fileText.Any(x => x == 'ð' || x == 'Ð' || x == 'ý' || x == 'Ý' || x == 'þ' || x == 'Þ'))
                 {
                     progressBar.Value += 2;
+                    dropList.Update();
                     continue;
                 }
 
                 var fixedText = SpecialCharacterFixer(fileText);
                 progressBar.Value++;
-                File.WriteAllText(filePaths[i], fixedText, Encoding.UTF8);
-                dropList.Items[i].Checked = true;
+
+                File.WriteAllText(filePath, fixedText, Encoding.UTF8);
+                listItem.Checked = true;
+                dropList.Update();
+                fixedItemCount++;
                 progressBar.Value++;
             }
-            return;
+            dropFilesLabel.Text = $"{fixedItemCount} file fixed!";
+            dropFilesLabel.Visible = true;
         }
 
         private void DragEnterHandler(object sender, DragEventArgs e)
