@@ -16,6 +16,7 @@ namespace SpecialCharacterFixer
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+
         }
 
         private void DragDropHandler(object sender, DragEventArgs e)
